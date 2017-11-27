@@ -11,5 +11,6 @@ setup(name='aincc',
       dependency_links=['https://github.com/andaviaco/de/tarball/master#egg=devol-0.1'],
       install_requires=[
           'numpy',
+          'Pillow'
       ],
       zip_safe=False)
