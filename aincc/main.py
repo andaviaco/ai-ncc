@@ -28,17 +28,19 @@ def ncc(img, template):
 
 def main():
     target_im = Image.open('img/Image_1.bmp').convert("L")
-    template_im = Image.open('img/Template.bmp').convert("L")
+    template_im = Image.open('img/test_01.bmp').convert("L")
 
-    print(target_im.format, target_im.size, target_im.mode)
+    target_matrix = np.asarray(target_im)
+    template_matrix = np.asarray(template_im)
+    lower_bounds = (0, 0)
+    upper_bounds = [bound - template_matrix.shape[i] for i, bound in enumerate(target_matrix.shape)]
 
-    print(template_im.format, template_im.size, template_im.mode)
+    objetive_fn = ncc(target_matrix, template_matrix)
+    de_sphere = DE(50, 100, objetive_fn, lb=lower_bounds, ub=upper_bounds)
+    result = de_sphere.optimize()
 
-    print(dir(target_im))
-    # de_sphere = DE(50, 100, sphere, lb=[-5, -5], ub=[5, 5])
-    # result = de_sphere.optimize()
-
-    # print(result)
+    print(np.rint(result).astype('int_'))
+    print(f'NCC: {objetive_fn(result)}')
 
 if __name__ == '__main__':
     main()
