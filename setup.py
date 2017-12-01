@@ -10,7 +10,8 @@ setup(name='aincc',
       packages=['aincc'],
       dependency_links=['https://github.com/andaviaco/de/tarball/master#egg=devol-0.1'],
       install_requires=[
-          'numpy',
-          'Pillow'
+          'numpy==1.13.3',
+          'Pillow==4.3.0',
+          'matplotlib==2.1.0'
       ],
       zip_safe=False)
