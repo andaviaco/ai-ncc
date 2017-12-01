@@ -36,11 +36,13 @@ def main():
     upper_bounds = [bound - template_matrix.shape[i] for i, bound in enumerate(target_matrix.shape)]
 
     objetive_fn = ncc(target_matrix, template_matrix)
-    de_sphere = DE(50, 100, objetive_fn, lb=lower_bounds, ub=upper_bounds)
+    de_sphere = DE(100, 100, objetive_fn, lb=lower_bounds, ub=upper_bounds, optimization='max')
     result = de_sphere.optimize()
+    y, x = np.rint(result).astype('int_')
 
-    print(np.rint(result).astype('int_'))
     print(f'NCC: {objetive_fn(result)}')
+    print(f'x ≃ {x}')
+    print(f'y ≃ {y}')
 
 if __name__ == '__main__':
     main()
