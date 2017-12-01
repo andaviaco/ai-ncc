@@ -1,8 +1,26 @@
 import numpy as np
 from PIL import Image
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 from devol import DE
 
+def  plotresults(image, template, result):
+    im = np.array(image, dtype=np.uint8)
+    t_width, t_height = template.size
+    y, x = result
+
+    fig, ax = plt.subplots(1)
+
+    ax.imshow(im)
+
+    # Create a Rectangle patch
+    rect = patches.Rectangle((x, y), t_width, t_height, linewidth=1, edgecolor='r', facecolor='none')
+
+    # Add the patch to the Axes
+    ax.add_patch(rect)
+
+    plt.show()
 
 def ncc(img, template):
     ih, iw = img.shape
@@ -43,6 +61,8 @@ def main():
     print(f'NCC: {objetive_fn(result)}')
     print(f'x ≃ {x}')
     print(f'y ≃ {y}')
+
+    plotresults(target_im, template_im, result)
 
 if __name__ == '__main__':
     main()
