@@ -1,3 +1,4 @@
+import argparse
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -44,12 +45,12 @@ def ncc(img, template):
 
     return fn
 
-def main():
-    target_im = Image.open('img/Image_1.bmp').convert("L")
-    template_im = Image.open('img/test_01.bmp').convert("L")
+def main(img, template):
+    target_im = Image.open(img)
+    template_im = Image.open(template)
 
-    target_matrix = np.asarray(target_im)
-    template_matrix = np.asarray(template_im)
+    target_matrix = np.asarray(target_im.convert("L"))
+    template_matrix = np.asarray(template_im.convert("L"))
     lower_bounds = (0, 0)
     upper_bounds = [bound - template_matrix.shape[i] for i, bound in enumerate(target_matrix.shape)]
 
@@ -65,4 +66,9 @@ def main():
     plotresults(target_im, template_im, result)
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("image", help="Target image.")
+    parser.add_argument("template", help="Template image.")
+    args = parser.parse_args()
+
+    main(args.image, args.template)
